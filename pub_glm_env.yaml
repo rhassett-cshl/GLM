@@ -1,0 +1,24 @@
+name: pub_glm
+# The relevent channels
+channels:
+- conda-forge
+- bioconda
+dependencies:
+# R
+- r-base>=4.0
+- bioconductor-biomart
+- bioconductor-gviz
+- bioconductor-genomicfeatures
+- bioconductor-genomicranges
+- bioconductor-rtracklayer
+- bioconductor-brgenomics
+- r-tidyverse
+- bioconductor-bsgenome.hsapiens.ucsc.hg38
+- bioconductor-plyranges
+- r-matrix
+- r-matrix.utils
+- r-argparse
+- r-optparse
+
+
+
