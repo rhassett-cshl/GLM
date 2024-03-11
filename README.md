@@ -3,19 +3,18 @@
 ### Estimate rates based on simulated data
 
 ```
-usage: ./estimate_kappa_simulation.R [-h] -i InputFile -model Model -l_s
+usage: ./estimate_kappa_simulation.R [-h] -i InputFile -m Model -l_s
                                      LearningSize -t Tolerance [-o outputDir]
 
 Estimate coefficients kappa on simulated data
 
 options:
   -h, --help         show this help message and exit
-  -i InputFile       Input training set of simulated data by SimPol
-  -model Model       Select a model (epigenomic, kmer)
-  -l_s LearningSize  Learning size for gradient ascent
-  -t Tolerance       Tolerance for gradient ascent
-  -o outputDir       Directory for saving the output of kappa
-
+  -i InputFile       input training set of simulated data by SimPol
+  -m Model           select a model (epigenomic, kmer)
+  -l_s LearningSize  learning size for gradient ascent
+  -t Tolerance       tolerance for gradient ascent
+  -o outputDir       directory for saving the output of kappa
 ```
 
 The input data is produced by [SimPol](https://github.com/CshlSiepelLab/SimPol), a simulator we developed for simulating the dynamics of RNA Polymerase (RNAP) on DNA template. 
