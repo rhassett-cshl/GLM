@@ -10,23 +10,23 @@ parser <- ArgumentParser(prog = "./estimate_kappa_simulation.R",
 
 parser$add_argument("-i", type = "character", required = TRUE, 
                     metavar = "InputFile",
-                    help = "Input training set of simulated data by SimPol")
+                    help = "input training set of simulated data by SimPol")
 
-parser$add_argument("-model", type = "character", required = TRUE,
-                    metavar = "Model",
-                    help = "Select a model (epigenomic, kmer)")
+parser$add_argument("-m", type = "character", required = TRUE,
+                    metavar = "Model", 
+                    help = "select a model (epigenomic, kmer)")
 
 parser$add_argument("-l_s", type = "double", required = TRUE,
                     metavar = "LearningSize",
-                    help = "Learning size for gradient ascent")
+                    help = "learning size for gradient ascent")
 
 parser$add_argument("-t", type = "double", required = TRUE,
-                    metavar = "Tolerance",
-                    help = "Tolerance for gradient ascent")
+                    metavar = "Tolerance", 
+                    help = "tolerance for gradient ascent")
 
 parser$add_argument("-o", type = "character", required = FALSE, 
                     metavar = "outputDir", default=".",
-                    help = "Directory for saving the output of kappa")
+                    help = "directory for saving the output of kappa")
 
 args <- parser$parse_args()
 
@@ -63,9 +63,22 @@ if(model == "epigenomic"){
   source("main_kmer_glm_functions.R")
 }
 
-######### call function and run ######### 
-cur_k = do_glm(gb, l_s = l_s, t = t)
+######### call function and run #########
+## print on-screen short messages 
+print("finish reading in dataframe")
+print("start fitting ...")
+print("fitting process is recorded in .log file")
 
+## record the gradient ascent steps into a log file
+log_out = file.path(out_dir, paste0('sim_', model, '_kappa.log'))
+sink(log_out, append = FALSE, split = FALSE) # suppress on-screen output
+
+## call gradient ascent function 
+cur_k = do_glm(gb, l_s = l_s, t = t)
+sink() ## stop and exit sink(), revert output back to the console
+
+## print on-screen short messages 
+print("finish fitting")
 
 #### changes to the the final output (.csv) file
 ## change col names
