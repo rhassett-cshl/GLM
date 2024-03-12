@@ -17,17 +17,17 @@ parser$add_argument("-i", type = "character", required = TRUE,
                     metavar = "InputFile",
                     help = "input training set of gene coordination, read counts and covariates")
 
-parser$add_argument("-c", type = "character", default = 'simulation', 
+parser$add_argument("-c", type = "character", default = "simulation", 
                     metavar = "Category",
-                    help = "category of input (name of cell line or simulation) [default %(default)]")
+                    help = "category of input (name of cell line or simulation) [default \"%(default)s\"]")
 
 parser$add_argument("-l_s", type = "double", default = 1e-7,
                     metavar = "LearningSize",
-                    help = "learning size for gradient ascent [default \"%(default)s\"]")
+                    help = "learning size for gradient ascent [default %(default)s]")
 
 parser$add_argument("-t", type = "double", default = 1e-1,
-                    metavar = "Tolerance", 
-                    help = "tolerance for gradient ascent [default \"%(default)s\"]")
+                    metavar = "Tolerance",
+                    help = "tolerance for gradient ascent [default %(default)s]")
 
 parser$add_argument("-o", type = "character", default=".", 
                     metavar = "OutputDir", 
