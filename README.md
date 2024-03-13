@@ -9,7 +9,7 @@ AUTHORS: "Lingjie Liu; Yixin Zhao; Rebecca Hasset; Adam Siepel"
 In our manuscript, we devise a probabilistic model that predicts nucleotide-specific elongation rates as a generalized linear function of nearby genomic and epigenomic features. Here, we provide scripts of the implementation, and demonstrate how we can use them to estimate coefficient $\kappa$ for both synthetic and experimental data.
 
 <p align="center">
-  <img src="figures/concept.pdf" alt="glm" width="500"/>
+  <img src="figures/concept.png" alt="glm" width="500"/>
 </p>
 
 <p align = "center">
