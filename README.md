@@ -5,6 +5,10 @@ AUTHORS: "Lingjie Liu; Yixin Zhao; Rebecca Hasset; Adam Siepel"
 
 # Probabilistic and machine-learning methods for predicting local rates of transcription elongation from nascent RNA sequencing data
 
+## Overview
+In our manuscript, we devise a probabilistic model that predicts nucleotide-specific elongation rates as a generalized linear function of nearby genomic and epigenomic features. Here, we provide scripts of the implementation, and demonstrate how we can use them to estimate coefficient $\kappa$ for both synthetic and experimental data.
+
+
 ## Examples
 
 ### Estimate rates based on simulated data
