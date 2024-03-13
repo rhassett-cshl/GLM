@@ -1,3 +1,10 @@
+---
+TITLE: "GLM for transcription elongation"
+AUTHORS: "Lingjie Liu; Yixin Zhao; Rebecca Hasset; Adam Siepel"
+---
+
+# Probabilistic and machine-learning methods for predicting local rates of transcription elongation from nascent RNA sequencing data
+
 ## Examples
 
 ### Estimate rates based on simulated data
