@@ -146,4 +146,8 @@ Rscript ./predict_zeta.R -g ../data/shared_gb_twoGenes.Rdata -c k562 -r ../data/
 
 
 ## Citation
-https://www.biorxiv.org/content/10.1101/2021.01.12.426408v1
+Liu, L., Zhao, Y. & Siepel, DNA-sequence and epigenomic determinants of local rates of transcription elongation. 2023. Preprint at [bioRxiv](https://www.biorxiv.org/content/10.1101/2023.12.21.572932v1)
+
+Zhao, Y., Liu, L., Hassett, R. & Siepel, A. Model-based characterization of the equilibrium dynamics of transcription initiation and promoter-proximal pausing in human cells. Nucleic Acids Res 51, 2023
+
+Siepel, A. A unified probabilistic modeling framework for eukaryotic transcription based on nascent RNA sequencing data. 2021. Preprint at [bioRxiv](https://www.biorxiv.org/content/10.1101/2021.01.12.426408v1)
