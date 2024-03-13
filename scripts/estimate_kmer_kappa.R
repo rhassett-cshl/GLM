@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 #### load argparse ####
 library(argparse)
 
@@ -12,7 +10,7 @@ suppressPackageStartupMessages({
 
 #### parse command line arguments ####
 
-parser <- ArgumentParser(prog = "./estimate_kmer_kappa.R",
+parser <- ArgumentParser(prog = "Rscript ./estimate_kmer_kappa.R",
                          description = "Estimate coefficients kappa of k-mer model")
 
 parser$add_argument("-i", type = "character", required = TRUE, 

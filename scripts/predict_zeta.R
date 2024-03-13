@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 #### load argparse ####
 library(argparse)
 
@@ -12,7 +10,7 @@ suppressPackageStartupMessages({
 
 #### parse command line arguments ####
 
-parser <- ArgumentParser(prog = "./predict_zeta.R",
+parser <- ArgumentParser(prog = "Rscript ./predict_zeta.R",
                          description = "Predict nucleotide-specific elongation rate zeta")
 
 parser$add_argument("-g", type = "character", required = TRUE, 

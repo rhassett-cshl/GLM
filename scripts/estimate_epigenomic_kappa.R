@@ -1,5 +1,3 @@
-#!/usr/bin/env Rscript
-
 #### load argparse ####
 library(argparse)
 
@@ -10,7 +8,7 @@ suppressPackageStartupMessages({
 
 #### parse command line arguments ####
 
-parser <- ArgumentParser(prog = "./estimate_epigenomic_kappa.R",
+parser <- ArgumentParser(prog = "Rscript ./estimate_epigenomic_kappa.R",
                          description = "Estimate coefficients kappa of epigenomic model")
 
 parser$add_argument("-i", type = "character", required = TRUE, 
