@@ -34,6 +34,11 @@ calculate_norm_item <- function(Yji){
   c1 = nrow(Yji) / sqrt(abs(colSums(Yji) * nrow(Yji) - colSums(Yji)^2))
   c2 = colSums(Yji) / sqrt(abs(colSums(Yji) * nrow(Yji) - colSums(Yji)^2))
   
+  ## !!! when one kmer is not existing in current features, colSums(Yji) = 0, 
+  ## which makes c1 and c2 to be infinity. So, when colSums(Yji) = 0, c1 = c2 = 0
+  c1[is.infinite(c1)] = 1
+  c2[is.na(c2)] = 1
+  
   return(list(c1 = c1,
               c2 = c2))
 }
