@@ -6,14 +6,18 @@ AUTHORS: "Lingjie Liu; Yixin Zhao; Rebecca Hasset; Adam Siepel"
 # Probabilistic and machine-learning methods for predicting local rates of transcription elongation from nascent RNA sequencing data
 
 ## Overview
-In our manuscript, we devise a probabilistic model that predicts nucleotide-specific elongation rates as a generalized linear function of nearby genomic and epigenomic features. Here, we provide scripts of the implementation, and demonstrate how we can use them to estimate coefficient $\kappa$ for both synthetic and experimental data.
+In our manuscript, we devise a probabilistic model that predicts nucleotide-specific elongation rates as a generalized linear function of nearby genomic and epigenomic features. 
+Here, we provide scripts of the implementation, and demonstrate how we can use them to estimate coefficient $\kappa$ for both synthetic and experimental data.
 
 <p align="center">
-  <img src="figures/concept.png" alt="glm" width="500"/>
+  <img src="figures/concept.png" alt="glm" width="1000"/>
 </p>
 
-<p align = "center">
-	Fig. 1 The initial probabilistic model for transcription initiation, promoter-proximal pausing, and elongation
+<p align = "left">
+	Fig. 1 Conceptual illustration of kinetic model for Pol II movement along DNA template in gene body. At nucleotide site $i$, relative elongation rate $\zeta_i$ is an exponentiated linear function of features $\vec Y_i$ and coefficients $\kappa$. Promoter-proximal pausing and termination are ignored here. 
+	Graphical model representation showing unobserved continuous-time Markov chain ($Z_i$) and observed NRS read counts ($X_i$).
+	Conceptual illustration showing that differences in average gene-body read depth are explained by the scaled initiation rate $\chi$, while relative read depth is explained by the generalized linear model for local elongation rate $\zeta_i$. 
+	Read count $X_i$ is assumed to be Poisson distributed with mean $\frac{\chi}{\zeta_i}$.
 </p>
 
 ## Examples
