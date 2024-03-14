@@ -168,10 +168,11 @@ Another input consists of the gene coordinates and the synthetic NRS read counts
 6 1            6     6 +      1                   0
 ```
 
-
+In addition to parameters `-l_s` for learning rate and `-t` for tolerance, an extra parameter `-p` is required for the $k$-mer-involved model, which indicates the application of L1 penalty. The `-p` takes the value of $\log_{10}{\nu}$, where $\nu$ is the hyperparameter for L1 regularization. The optimal $\nu$ of the L1 penalty is determined by cross-validation and is specified in the following command example:
 ```
 Rscript ./estimate_kmer_kappa.R -i ../data/simKmer_gbrc_trainAll.Rdata -k_m ../data/simKmer_kmerMT_trainAll.Rdata -k_t ../data/allmer_types.RData -c simulation -l_s 1e-4 -t 1e-2 -p -5.8
 ```
+This example takes approximately 1 hour to finish the fitting. Similarly, the fitting process is recorded in the `sim_kmer_kappa.log` file, and the estimated $\kappa$ values are saved in the `sim_kmer_kappa.csv` file.
 
 2. Work with real data.
 ```
