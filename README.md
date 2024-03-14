@@ -210,12 +210,63 @@ options:
   -o OutputDir     directory for saving the predicted nucleotide-specific zeta
 ```
 
-1. Predict using the epigenomic model.
+**Predict using the epigenomic model** <br>
+With the estimated coefficients $\kappa$ for four cell lines (K562, CD14+, HeLa-S3, and MCF-7), we can predict nucleotide-specific elongation rates $\zeta_i$. In the manuscript, we primarily used the epigenomic model and the combined model to predict $\sim$ 3,600 expressed genes shared by these four cell lines, which we then prepared as public [UCSC browser tracks](http://compgen.cshl.edu/elongation-rate-tracks.php). For illustration purposes, we extracted data for two genes (*RPF1* and *ZNF746*) from K562, as shown in Figure 6 of our manuscript.
+
+When predicting with epigenomic models, there are four required input files. 
+The `-g` option requires gene coordinates:
+```
+# A tibble: 6 × 6
+  seqnames    start      end width strand ensembl_gene_id
+  <fct>       <int>    <int> <int> <fct>  <chr>          
+1 1        84481531 84481531     1 +      ENSG00000117133
+2 1        84481532 84481532     1 +      ENSG00000117133
+3 1        84481533 84481533     1 +      ENSG00000117133
+4 1        84481534 84481534     1 +      ENSG00000117133
+5 1        84481535 84481535     1 +      ENSG00000117133
+6 1        84481536 84481536     1 +      ENSG00000117133
+```
+The `-r` option requires real NRS read counts from the chosen cell line:
+```
+# A tibble: 6 × 1
+  score
+  <dbl>
+1     0
+2     0
+3     0
+4     0
+5     0
+6     0
+```
+The `-e_m` option requires standardized epigenomic covariates:
+```
+# A tibble: 6 × 10
+  ctcf[,1] h4k20me1[,1] h3k79me2[,1] h3k4me1[,1] h3k9me3[,1] h3k36me3[,1]
+     <dbl>        <dbl>        <dbl>       <dbl>       <dbl>        <dbl>
+1  -0.0622        0.401      -0.0964       0.884   -0.00173         0.460
+2  -0.0621        0.405      -0.0953       0.889   -0.00135         0.452
+3  -0.0621        0.409      -0.0943       0.895   -0.000975        0.444
+4  -0.0620        0.413      -0.0933       0.900   -0.000598        0.436
+5  -0.0619        0.416      -0.0922       0.905   -0.000221        0.427
+6  -0.0619        0.420      -0.0912       0.910    0.000156        0.419
+# ℹ 4 more variables: sj5 <dbl[,1]>, sj3 <dbl[,1]>, rpts <dbl[,1]>, wgbs <dbl>
+```
+The `-k` option requires estimated $\kappa$:
+```
+"feature","kappa","type"
+"3' spl",-0.0394968062126368,"k562_original"
+"5' spl",-0.025090231062656,"k562_original"
+"CTCF",-0.0276861452624072,"k562_original"
+"DNAm",-0.204509198172684,"k562_original"
+"H3K36me3",-0.108807845029559,"k562_original"
+"H3K4me1",-0.0356708965432705,"k562_original"
+```
+In addition to the input files, the `-c` option requires names of cell lines (`k562`, `cd14`, `mcf7` or `hela`); and the `-m` option accepts either `epigenomic` or `combined` model. Try using the following command:
 ```
 Rscript ./predict_zeta.R -g ../data/shared_gb_twoGenes.Rdata -c k562 -r ../data/k562_rc_twoGenes.Rdata -m epigenomic -e_m ../data/k562_epft_norm_twoGenes.Rdata -k ../data/epKappa_fourCell.csv
 ```
 
-2.  Predict using the combined model (epigenomic and k-mer features).
+**Predict using the combined model (epigenomic and $k$-mer features)** <br>
 ```
 Rscript ./predict_zeta.R -g ../data/shared_gb_twoGenes.Rdata -c k562 -r ../data/k562_rc_twoGenes.Rdata -m combined -e_m ../data/k562_epft_norm_twoGenes.Rdata -k ../data/epAllmerKappa_fourCell.csv -k_m ../data/allmerMT_twoGenes.Rdata
 ```
