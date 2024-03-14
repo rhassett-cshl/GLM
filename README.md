@@ -101,7 +101,7 @@ After the completion of fitting, the estimated coefficients $\kappa$ are saved i
 ```
 
 **Real PRO-seq data** <br>
-Having established that our model works well with simulated data, we applied it to real PRO-seq data from K562 cells, for which abundant epigenomic data are available. 
+Having established that our model works well with simulated data, we applied it to real PRO-seq data from K562 cells, for which abundant epigenomic data are available. Currently, the epigenomic model of K562 includes twelve features. Therefore, the input format is similar to the input simulation data shown above but with more feature columns. All features are standardized and subjected to smoothing filters designed to capture broader effects that extend to neighboring nucleotide positions centered on the features. In each replicate, we sampled 2000 genes, with 80% of the data serving as the training data, which serves as the input. One replicate is utilized in the command line and executed as an example (fitting can take hours due to the size of the real data).
 
 ```
 Rscript ./estimate_epigenomic_kappa.R -i ../data/k562_samp_epft_norm_train_1.Rdata -c k562 -l_s 1e-7 -t 1e-1
