@@ -137,7 +137,7 @@ options:
 In addition to epigenomic factors, we extended our generalized linear model to consider the $k$-mer content of the local DNA sequence, initially considering 5-mers only ($k=5$) in simulation. 
 The notable difference in the $k$-mer-involved model is the utilization of L1 regularization to limit the number of non-zero coefficients $\kappa$ of the $\sim$ 1000 $k$-mer features. Therefore, the original likelihood function used in the epigenomic model is upgraded to a penalized likelihood in the fitting process.
 
-We tested this approach with data simulated by SimPol, in which 100 randomly-selected 5-mers were assigned negative or positive coefficients and all others were assigned coefficients of zero. At each position $i$, the indicator feature associated with the 5-mer centered at $i$ is set to 1 and the remaining 5-mer indicator features are set to 0. Due to the high-dimensional nature of the $k$-mer feature vectors and the prevalence of zero values for most features across genomic positions, a sparse matrix is used to store the $k$-mer covariates. This method significantly reduces storage requirements and speeds up calculations. The input $k$-mer matrix appears as follows:
+We tested this approach with data simulated by SimPol, in which 100 randomly-selected 5-mers were assigned negative or positive coefficients and all others were assigned coefficients of zero. At each position $i$, the indicator feature associated with the 5-mer centered at $i$ is set to 1 and the remaining 5-mer indicator features are set to 0. Due to the high-dimensional nature of the $k$-mer feature vectors and the prevalence of zero values for most features across genomic positions, a sparse matrix is used to store the $k$-mer covariates. This method significantly reduces storage requirements and speeds up calculations. The `-k_t` input $k$-mer matrix appears as follows:
 ```
 6 x 1024 sparse Matrix of class "dgCMatrix"
                                                                               
@@ -155,7 +155,7 @@ We tested this approach with data simulated by SimPol, in which 100 randomly-sel
 [5,] . . . . . . . . . . . . . . . . . . . 1 . . . . . . . . . . . . . . . . .
 [6,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 ```
-Another input consists of the gene coordinates and the synthetic NRS read counts, which appear as follows:
+Another input `-i` consists of the gene coordinates and the synthetic NRS read counts, which appear as follows:
 ```
 # A tibble: 6 × 6
   seqnames start   end strand ensembl_gene_id score
@@ -168,16 +168,24 @@ Another input consists of the gene coordinates and the synthetic NRS read counts
 6 1            6     6 +      1                   0
 ```
 
+Another input `-k_t` consists of a vector of all types of $k$-mers, which appear as follows:
+```
+[1] "AAAAA" "TAAAA" "GAAAA" "CAAAA" "ATAAA" "TTAAA"
+```
+
 In addition to parameters `-l_s` for learning rate and `-t` for tolerance, an extra parameter `-p` is required for the $k$-mer-involved model, which indicates the application of L1 penalty. The `-p` takes the value of $\log_{10}{\nu}$, where $\nu$ is the hyperparameter for L1 regularization. The optimal $\nu$ of the L1 penalty is determined by cross-validation and is specified in the following command example:
 ```
 Rscript ./estimate_kmer_kappa.R -i ../data/simKmer_gbrc_trainAll.Rdata -k_m ../data/simKmer_kmerMT_trainAll.Rdata -k_t ../data/allmer_types.RData -c simulation -l_s 1e-4 -t 1e-2 -p -5.8
 ```
 This example takes approximately 1 hour to finish the fitting. Similarly, the fitting process is recorded in the `sim_kmer_kappa.log` file, and the estimated $\kappa$ values are saved in the `sim_kmer_kappa.csv` file.
 
-2. Work with real data.
+**Real PRO-seq data** <br>
+We re-analyzed the PRO-seq data from K562 cells and we allowed for $k$-mers of any length up to and including five nucleotides ($k \in \{1, 2, 3, 4, 5\}$). Standardization of the indicator features for $k$-mers led to a computational problem that required special attention. Prior to standardization, these features had values of zero at the vast majority of genomic positions, but after standardization these zeroes were converted to negative real values. As a result, we addressed this problem by first calculating from the unstandardized sparse matrix and using a linear transformation to convert them to the corresponding values for the standardized features. In this way, the speed of processing the unstandardized values could be maintained while properly considering the effects of standardization. The inputs are similar to the simulation shown above. An example using one replicate of training data is provided in the command line (fitting may take hours due to the size of the real data).
+
 ```
 Rscript ./estimate_kmer_kappa.R -i ../data/k562_subset1_gbrc_train.RData -k_m ../data/k562_subset1_allmerMT_train.RData -k_t ../data/allmer_types.RData -c k562 -l_s 1e-7 -t 1e-1 -p -3.6
 ```
+Similarly, the fitting process is recorded in the `k562_kmer_kappa.log` file, and the estimated $\kappa$ values are saved in the `k562_kmer_kappa.csv` file.
 
 
 ### Predicted nucleotide-specific elongation rates $\zeta_i$
