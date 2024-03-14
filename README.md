@@ -261,16 +261,40 @@ The `-k` option requires estimated $\kappa$:
 "H3K36me3",-0.108807845029559,"k562_original"
 "H3K4me1",-0.0356708965432705,"k562_original"
 ```
-In addition to the input files, the `-c` option requires names of cell lines (`k562`, `cd14`, `mcf7` or `hela`); and the `-m` option accepts either `epigenomic` or `combined` model. Try using the following command:
+In addition to the input files, the `-c` option requires names of cell lines (`k562`, `cd14`, `mcf7` or `hela`); and the `-m` option accepts either `epigenomic` or `combined` model. Try an example of K562 using the following command:
+
 ```
 Rscript ./predict_zeta.R -g ../data/shared_gb_twoGenes.Rdata -c k562 -r ../data/k562_rc_twoGenes.Rdata -m epigenomic -e_m ../data/k562_epft_norm_twoGenes.Rdata -k ../data/epKappa_fourCell.csv
 ```
 
+The output is the predicted local elongation rates saved in the bigwig file as `k562_epigenomic_predZeta.bw`. In with the score column, positive values represent rates on positive strands, while negative values indicate rates on negative strands:
+```
+GRanges object with 35116 ranges and 1 metadata column:
+          seqnames    ranges strand |     score
+             <Rle> <IRanges>  <Rle> | <numeric>
+      [1]     chr1  84481531      * |  0.895864
+      [2]     chr1  84481532      * |  0.896287
+      [3]     chr1  84481533      * |  0.896715
+      [4]     chr1  84481534      * |  0.897148
+      [5]     chr1  84481535      * |  0.897586
+      ...      ...       ...    ... .       ...
+  [35112]     chr7 149495483      * | -0.663404
+  [35113]     chr7 149495484      * | -0.664164
+  [35114]     chr7 149495485      * | -0.664926
+  [35115]     chr7 149495486      * | -0.665692
+  [35116]     chr7 149495487      * | -0.666461
+  -------
+  seqinfo: 2 sequences from an unspecified genome
+```
+This bigwig file can be visualized in tools like the UCSC Genome Browser or Gviz, which should appear exactly the same as Figure 6A and 6B in our manuscript.
+
+
 **Predict using the combined model (epigenomic and $k$-mer features)** <br>
+We also predict $\zeta_i$ using a combined model. In this setting, one more input file is required compared to predicting using the epigenomic model. an unstandardized $k$-mer sparse matrix. Additionally, the estimated $\kappa$ should include coefficients of both epigenomic and $k$-mer features.
 ```
 Rscript ./predict_zeta.R -g ../data/shared_gb_twoGenes.Rdata -c k562 -r ../data/k562_rc_twoGenes.Rdata -m combined -e_m ../data/k562_epft_norm_twoGenes.Rdata -k ../data/epAllmerKappa_fourCell.csv -k_m ../data/allmerMT_twoGenes.Rdata
 ```
-
+With this example command, the output bigwig file should be `k562_combined_predZeta.bw`.
 
 
 ## Citation
