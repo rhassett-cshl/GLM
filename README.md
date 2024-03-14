@@ -106,9 +106,11 @@ Having established that our model works well with simulated data, we applied it 
 ```
 Rscript ./estimate_epigenomic_kappa.R -i ../data/k562_samp_epft_norm_train_1.Rdata -c k562 -l_s 1e-7 -t 1e-1
 ```
+Same as in the simulation analysis, the output should include the the `k562_epigenomic_kappa.log` file and the `k562_epigenomic_kappa.csv` file.
 
 
-### Estimate coefficients $\kappa$ based on k-mer model ($k \in \{1, 2, 3, 4, 5\}$)
+
+### Estimate coefficients $\kappa$ based on $k$-mer model ($k \in \{1, 2, 3, 4, 5\}$)
 
 ```
 usage: Rscript ./estimate_kmer_kappa.R [-h] -i InputFile -k_m Inputkmer -k_t
@@ -131,7 +133,42 @@ options:
   -o OutputDir         directory for saving the output of kappa
 ```
 
-1. Work with simulated data.
+**Simulation data** <br>
+In addition to epigenomic factors, we extended our generalized linear model to consider the $k$-mer content of the local DNA sequence, initially considering 5-mers only ($k=5$) in simulation. 
+The notable difference in the $k$-mer-involved model is the utilization of L1 regularization to limit the number of non-zero coefficients $\kappa$ of the $\sim$ 1000 $k$-mer features. Therefore, the original likelihood function used in the epigenomic model is upgraded to a penalized likelihood in the fitting process.
+
+We tested this approach with data simulated by SimPol, in which 100 randomly-selected 5-mers were assigned negative or positive coefficients and all others were assigned coefficients of zero. At each position $i$, the indicator feature associated with the 5-mer centered at $i$ is set to 1 and the remaining 5-mer indicator features are set to 0. Due to the high-dimensional nature of the $k$-mer feature vectors and the prevalence of zero values for most features across genomic positions, a sparse matrix is used to store the $k$-mer covariates. This method significantly reduces storage requirements and speeds up calculations. The input $k$-mer matrix appears as follows:
+```
+6 x 1024 sparse Matrix of class "dgCMatrix"
+                                                                              
+[1,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[2,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[3,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[4,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[5,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[6,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+                                                                              
+[1,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 1 . . . .
+[2,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[3,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[4,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+[5,] . . . . . . . . . . . . . . . . . . . 1 . . . . . . . . . . . . . . . . .
+[6,] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+```
+Another input consists of the gene coordinates and the synthetic NRS read counts, which appear as follows:
+```
+# A tibble: 6 × 6
+  seqnames start   end strand ensembl_gene_id score
+  <chr>    <int> <int> <chr>  <chr>           <int>
+1 1            1     1 +      1                   0
+2 1            2     2 +      1                   0
+3 1            3     3 +      1                   0
+4 1            4     4 +      1                   0
+5 1            5     5 +      1                   0
+6 1            6     6 +      1                   0
+```
+
+
 ```
 Rscript ./estimate_kmer_kappa.R -i ../data/simKmer_gbrc_trainAll.Rdata -k_m ../data/simKmer_kmerMT_trainAll.Rdata -k_t ../data/allmer_types.RData -c simulation -l_s 1e-4 -t 1e-2 -p -5.8
 ```
