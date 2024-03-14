@@ -286,7 +286,7 @@ GRanges object with 35116 ranges and 1 metadata column:
   -------
   seqinfo: 2 sequences from an unspecified genome
 ```
-This bigwig file can be visualized in tools like the UCSC Genome Browser or Gviz, which should appear exactly the same as Figure 6A and 6B in our manuscript.
+This bigwig file can be visualized in tools like the UCSC Genome Browser or Gviz. 
 
 
 **Predict using the combined model (epigenomic and $k$-mer features)** <br>
@@ -294,7 +294,7 @@ We also predict $\zeta_i$ using a combined model. In this setting, one more inpu
 ```
 Rscript ./predict_zeta.R -g ../data/shared_gb_twoGenes.Rdata -c k562 -r ../data/k562_rc_twoGenes.Rdata -m combined -e_m ../data/k562_epft_norm_twoGenes.Rdata -k ../data/epAllmerKappa_fourCell.csv -k_m ../data/allmerMT_twoGenes.Rdata
 ```
-With this example command, the output bigwig file should be `k562_combined_predZeta.bw`.
+With this example command, the output bigwig file should be `k562_combined_predZeta.bw`. When visualizing, it should appear exactly the same as Figure 6A and 6B in our manuscript.
 
 
 ## Citation
