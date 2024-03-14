@@ -10,7 +10,7 @@ In this study, we revisit the questions about the determinants of local elongati
 
 We adapt this model to allow for a continuously variable elongation rate along the genome, using a generalized linear model to capture the relationship between the local rate and nearby genomic features (see [Liu et al 2023](https://www.biorxiv.org/content/10.1101/2023.12.21.572932v1)). By accounting for differences across genes in initiation rate, we are able to efficiently pool information across genes, and extract high-resolution information about relative local elongation rates from steady-state data. 
 
-Here, we provide scripts of the implementation, and demonstrate how quantify both previously known and novel correlates of elongation rate through estimation of coefficients $\kappa$. We then use our models to predict nucleotide-specific elongation rates $\zeta_i$ genome-wide and make our predictions available in a UCSC Genome Browser track.
+Here, we provide scripts of the implementation, and demonstrate how quantify both previously known and novel correlates of elongation rate through estimation of coefficients $\kappa$. We then use our models to predict nucleotide-specific elongation rates $\zeta_i$ genome-wide and make our predictions available in a [UCSC browser track](http://compgen.cshl.edu/elongation-rate-tracks.php).
 
 <p align="center">
   <img src="figures/concept.png" alt="glm" width="1000"/>
